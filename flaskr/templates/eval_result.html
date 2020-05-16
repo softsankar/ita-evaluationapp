@@ -1,0 +1,37 @@
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+<h2 align="center">Evaluation Grade Recommendation</h2>
+<table id="t01">
+  <tr>
+    {% if eval_result.test_required == 'No' %}
+        <td>Congrautlations !!! You can enroll your child <b>{{ eval_result.first_name }} {{ eval_result.last_name }}</b>
+            without an evaluation exam for the following grade: </td>
+    {% else %}
+        <td>We are happy to inform you that your child <b>{{ eval_result.first_name }} {{ eval_result.last_name }}</b>
+            shall be given the evaluation for the following grade based on the information you provided:</td>
+    {% endif %}
+  </tr>
+  <tr>
+    <td align="center"><b>{{ eval_result.eval_grade }}</b></td>
+  </tr>
+  {% if eval_result.test_required == "true" %}
+  <tr>
+    <td align="left">
+    <span><b>Important Note:</b>
+    <p><ul>
+    <li>Students will be placed in appropriate grade based on evaluation score </li>
+    <li>Student <b>must score 80% or above</b> to qualify for grade  </li>
+    </ul></p></td>
+  </tr>
+  {% endif %}
+</table>
+</div>
+</body>
+</html>
+
+

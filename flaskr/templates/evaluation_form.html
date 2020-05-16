@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Evaluation Form</title>
+</head>
+<body>
+<form name="evaluationForm" method = "POST">
+    <table width="65%">
+    <tbody>
+    <tr><td colspan="2">
+    <fieldset>
+        <legend>Registration Type<superscript>*</superscript></legend>
+        <input type="radio" name="regType" id="new" value="New"/>
+        <label for="new">New</label>
+        <input type="radio" name="regType" id="return" value="Returning Student"/>
+        <label for="return">Returning Student</label>
+    </fieldset></td></tr>
+    <tr><td>
+    <label for="firstName">First Name<superscript>*</superscript>:</label>
+    <input type="text" id="firstName"/></td>
+    <td><label for="lastName">Last Name<superscript>*</superscript>:</label>
+    <input type="text" id="lastName"/></td></t>
+    <tr><td>
+        <label for="birthDate">Birth Date <superscript>*</superscript>:</label>
+        <input type="date" id="birthDate"/>
+    </td></tr>
+    <tr><td colspan="2">
+        <label for="grade">Grade : </label>
+        <select id="grade">
+            <option value="">Select Registered Grade</option>
+            <option value="Preschool 1">Preschool 1</option>
+            <option value="Preschool 2">Preschool 2</option>
+            <option value="Basic 1">Basic 1</option>
+            <option value="Basic 2">Basic 2</option>
+            <option value="Advanced Basic">Advanced Basic</option>
+            <option value="Grade 1">Grade 1</option>
+            <option value="Grade 2">Grade 2</option>
+            <option value="Grade 3">Grade 3</option>
+            <option value="Grade 4">Grade 4</option>
+            <option value="Grade 5">Grade 5</option>
+            <option value="Grade 6">Grade 6</option>
+            <option value="Grade 7">Grade 7</option>
+        </select>
+    </td></tr>
+    <tr><td colspan="2">
+        <fieldset>
+            <legend>Contact Details</legend>
+            <label for="email">Email :</label>
+            <input type="text" id="email"/>
+            <label for="mobileNumber">Mobile :</label>
+            <input type="phone" id="mobileNumber"/>
+        </fieldset>
+    </td></tr>
+    </tbody></table>
+</form>
+</body>
+</html>
