@@ -8,22 +8,27 @@ class EvalDB:
         self.db_name = db_name
 
 class EvalFormDB(EvalDB):
-
-    ## TODO Get Applicant record using Student Id
-
-    def add_evaluation_form(self, evaluation_form):
-        ## TODO Check for valid values
-        ## TODO Check if student record exists. If exists, NO insert.
+    def fetch_evaluation_form(self, evaluation_form):
         with sql.connect(self.db_name) as con:
             cur = con.cursor()
+            identification = evaluation_form.student_id
+            cur.execute("SELECT student_id FROM evaluation_applicant WHERE student_id=identification")
+            myresult = cur.fetchall()
+            myresult = list(myresult)
+            con.commit()
 
-            ins_sql = "INSERT INTO evaluation_applicant(return_ind, branch, student_id, first_name, middle_name,last_name, \
+    def add_evaluation_form(self, evaluation_form):
+        self.fetch_evaluation_form(evaluation_form)
+        if list is None:
+            with sql.connect(self.db_name) as con:
+                cur = con.cursor()
+                ins_sql = "INSERT INTO evaluation_applicant(return_ind, branch, student_id, first_name, middle_name,last_name, \
                        email, birth_date,parent_fname,parent_lname, mobile_no, grade, read_level, write_level, \
                        speak_level, comments)  \
                        values (:return_ind, :branch, :student_id, :first_name, :middle_name,:last_name, :email, \
                       :birth_date, :parent_fname, :parent_lname,:mobile_no, :grade, :rlevel, :wLevel, :sLevel, \
                       :comments) "
-            cur.execute(ins_sql,
+                cur.execute(ins_sql,
                         {'return_ind':evaluation_form.return_ind,
                         'branch':evaluation_form.branch,
                         'student_id':evaluation_form.student_id,
@@ -41,9 +46,10 @@ class EvalFormDB(EvalDB):
                         'sLevel':evaluation_form.speak_level,
                         'comments': evaluation_form.comments
                         })
-            con.commit()
-            msg = "Record successfully added"
-
+                con.commit()
+                msg = "Record successfully added"
+        else :
+            raise TypeError("The student already exists")
 
 class EvalResultDB(EvalDB):
 
