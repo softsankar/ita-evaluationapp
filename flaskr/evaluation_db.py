@@ -15,6 +15,7 @@ class EvalFormDB(EvalDB):
             cur.execute("SELECT student_id FROM evaluation_applicant WHERE student_id=identification")
             myresult = cur.fetchall()
             myresult = list(myresult)
+            return myresult
             con.commit()
 
     def add_evaluation_form(self, evaluation_form):
