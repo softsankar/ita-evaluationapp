@@ -1,9 +1,10 @@
-from flaskr.evaluation_models import EvalForm
-from flaskr.evaluation_db import EvalFormDB
-from flaskr.evaluation_db import EvalResultDB
-from flaskr.evaluation_models import EvalResult
-from flaskr.evaluation_engine import EvaluationEngine
+from evaluation_models import EvalForm
+from evaluation_db import EvalFormDB
+from evaluation_db import EvalResultDB
+from evaluation_models import EvalResult
+from evaluation_engine import EvaluationEngine
 from datetime import datetime
+from evaluation_db import SkillSet
 
 
 def submit_eval_form(request,database):
@@ -41,18 +42,24 @@ def submit_eval_form(request,database):
                                 rLevel,sLevel,wLevel,
                                 form.get('comments'))
     eval_form_db = EvalFormDB(database)
-    eval_form_db.add_evaluation_form(evaluation_form)
-    cur_date = datetime.now()
-    evalEng = EvaluationEngine(str(cur_date.year)+ "-09-01")
-    grade,test_required = evalEng.determine_grade(evaluation_form)
-    print ('Test Required : ',test_required)
-    test_req_ind = 'No'
-    if test_required is True:
-        test_req_ind = 'Yes'
-    eval_res = EvalResult(evaluation_form.student_id,
+    add = eval_form_db.add_evaluation_form(evaluation_form)
+    if add == "Success":
+        cur_date = datetime.now()
+        evalEng = EvaluationEngine(str(cur_date.year) + "-09-01")
+        grade,test_required = evalEng.determine_grade(evaluation_form)
+        print ('Test Required : ',test_required)
+        test_req_ind = 'No'
+        if test_required is True:
+            test_req_ind = 'Yes'
+        eval_res = EvalResult(evaluation_form.student_id,
                           evaluation_form.first_name,evaluation_form.last_name,
                           grade,test_req_ind)
-    eval_res_db = EvalResultDB(database)
-    eval_res_db.add_eval_result(eval_res)
-    return eval_res
+        eval_res_db = EvalResultDB(database)
+        eval_res_db.add_eval_result(eval_res)
+        skill_set_db = SkillSet(database)
+        print(skill_set_db.fetch_skill_set(eval_res))
+        return eval_res
+    elif add =="already exist":
+        print('hi')
+
 
