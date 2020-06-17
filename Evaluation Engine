@@ -1,0 +1,111 @@
+from flaskr.evaluation_models import EvalForm
+from flaskr import dateutil as du
+
+class EvaluationEngine:
+
+    def __init__(self, cut_of_date):
+        self.dob_as_of = cut_of_date
+
+    def determine_grade (self, birth_date, current_grade):
+        age = du.find_age(birth_date, self.dob_as_of) # ask about this method where it is written or if it is a library method
+        print("age: {}".format(age))
+        is_test_req = True
+        evaluation_grades = []
+        current_grade_number = 0
+
+        if current_grade == 'Preschool 1':
+            current_grade_number = 1
+
+        elif current_grade == 'Preschool 2':
+            current_grade_number = 2
+
+        elif current_grade == 'Basic 1':
+            current_grade_number = 3
+
+        elif current_grade == 'Basic 2':
+            current_grade_number = 4
+
+        elif current_grade == 'Grade 1':
+            current_grade_number = 5
+
+        elif current_grade == 'Grade 2':
+            current_grade_number = 6
+
+        elif current_grade == 'Grade 3':
+            current_grade_number = 7
+
+        elif current_grade == 'Grade 4':
+            current_grade_number = 8
+
+        elif current_grade == 'Grade 5':
+            current_grade_number = 9
+
+        elif current_grade == 'Grade 6':
+            current_grade_number = 10
+
+        elif current_grade == 'Grade 7':
+            current_grade_number = 11
+
+        print("current_grade_number : {}".format(current_grade_number))
+
+        if (age >= 3 and current_grade_number < 1):
+            evaluation_grades.append('Preschool 1')
+            is_test_req = False
+
+        if (age >= 4 and current_grade_number < 2):
+            evaluation_grades.append('Preschool 2')
+            is_test_req = False
+
+        if (age >= 5 and current_grade_number < 3):
+            evaluation_grades.append('Basic 1')
+            is_test_req = False
+
+        if (age >= 6 and current_grade_number < 4):
+            evaluation_grades.append('Basic 2')
+
+        if (age >= 7 and current_grade_number < 5):
+            evaluation_grades.append('Grade 1')
+
+        if (age >= 8 and current_grade_number < 6):
+            evaluation_grades.append('Grade 2')
+
+        if (age >= 9 and current_grade_number < 7):
+            evaluation_grades.append('Grade 3')
+
+        if (age >= 10 and current_grade_number < 8):
+            evaluation_grades.append('Grade 4')
+
+        if (age >= 11 and current_grade_number < 9):
+            evaluation_grades.append('Grade 5')
+
+        if (age >= 12 and current_grade_number < 10):
+            evaluation_grades.append('Grade 6')
+
+        if (age >= 13 and current_grade_number < 11):
+            evaluation_grades.append('Grade 7')
+
+        print(evaluation_grades)
+        print("evaluation_grades: {}".format(evaluation_grades))
+
+        return evaluation_grades, is_test_req
+
+    # This method returns a boolean value where true means that the student is eligible for skipping a grade (advanced placement).
+    def advanced_placement (self, birth_date, current_grade):
+        age = du.find_age(birth_date, self.dob_as_of)
+        eligibility = False
+        if (age >= 9 and current_grade == 'Grade 2'): #Find relationship between minimum age and the current grade. If they are older than the minimum age, they are eligible to skip a grade.
+            eligibility = True
+        if (age >= 10 and current_grade == 'Grade 3'):
+            eligibility = True
+        if (age >= 11 and current_grade == 'Grade 4'):
+            eligibility = True
+        if (age >= 12 and current_grade == 'Grade 5'):
+            eligibility = True
+        if (age >= 13 and current_grade == 'Grade 6'):
+            eligibility = True
+        return eligibility
+
+if __name__ == "__main__":
+    eng = EvaluationEngine("2020-09-01")
+    evGrade, test_req =  eng.determine_grade("2014-07-04", "Preschool-1")
+    print("Recommended Grade : {}, Test Required : {}".format(evGrade, test_req))
