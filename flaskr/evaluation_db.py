@@ -1,6 +1,7 @@
 import sqlite3 as sql
 
 from datetime import datetime
+from evaluation_models import Skill
 
 
 class EvalDB:
@@ -80,9 +81,13 @@ class SkillSet(EvalDB):
     def fetch_skill_set(self, eval_result):
         with sql.connect(self.db_name) as con:
             cur = con.cursor()
-            result = eval_result.eval_grade
-            cur.execute("SELECT * FROM skill_set WHERE grade_level = ?", (result,))
-            resulting= cur.fetchall()
+            #result = eval_result.eval_grade
+            cur.execute("SELECT grade_level, Age, Skills, Grammar, Reading, Writing, Oral, Project FROM skill_set WHERE grade_level = ?", (eval_result.eval_grade,))
+            skill_res= cur.fetchall()
+            skillset=[] 
+            for row in skill_res:
+                s = Skill(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
+                skillset.append(s)
             con.commit()
             print('Successfully received')
-            return resulting
+            return skillset
