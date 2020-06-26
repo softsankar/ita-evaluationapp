@@ -21,7 +21,7 @@ class EvalForm:
         self.comments = comments
 
     def fullname(self):
-        return'{} {}'.format(self.name)
+        return '{}'.format(self.name)
 
 
 
@@ -34,3 +34,15 @@ class EvalResult:
         self.first_name = first_name
         self.last_name = last_name
 
+
+class Skill:
+
+    def __init__(self, grade_level, age, skills, grammar, reading, writing, oral, project):
+        self.grade_level = grade_level
+        self.age = age
+        self.skills = skills
+        self.grammar = grammar
+        self.reading = reading
+        self.writing = writing
+        self.oral = oral
+        self.project = project
