@@ -78,15 +78,15 @@ class EvalResultDB(EvalDB):
 
 class SkillSet(EvalDB):
 
-    def fetch_skill_set(self, eval_result):
+        def fetch_skill_set(self, eval_result):
         with sql.connect(self.db_name) as con:
             cur = con.cursor()
-            #result = eval_result.eval_grade
             cur.execute("SELECT grade_level, Age, Skills, Grammar, Reading, Writing, Oral, Project FROM skill_set WHERE grade_level = ?", (eval_result.eval_grade,))
             skill_res= cur.fetchall()
-            skillset=[] 
+            skillset={}
             for row in skill_res:
                 s = Skill(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
-                skillset.append(s)
+                skillset[row[0]] = s
+            con.commit()
             print('Successfully received')
             return skillset
