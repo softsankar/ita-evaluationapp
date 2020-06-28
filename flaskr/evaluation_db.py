@@ -87,6 +87,5 @@ class SkillSet(EvalDB):
             for row in skill_res:
                 s = Skill(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
                 skillset[row[0]] = s
-            con.commit()
             print('Successfully received')
             return skillset
