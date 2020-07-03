@@ -18,8 +18,102 @@
                 .bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: #dc3545}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: #ffffff !important;} .asteriskField{color: red;}
     </style>
     <script>
-            function validate()    {        var optionsStudent = document.forms["Evaluation Form"]["optionsStudent"];        var branch = document.forms["Evaluation Form"]["branch"];        var student_id = document.forms["Evaluation Form"]["student_id"];        var first_name =  document.forms["Evaluation Form"]["first_name"];        var last_name = document.forms["Evaluation Form"]["last_name"];        var date = document.forms["Evaluation Form"]["date"];        var grade = document.forms["Evaluation Form"]["grade"];        var parent_fname = document.forms["Evaluation Form"]["parent_fname"];        var parent_lname = document.forms["Evaluation Form"]["parent_lname"];        var email = document.forms["Evaluation Form"]["email"];        var mobile_no = document.forms["Evaluation Form"]["mobile_no"];        if (optionsStudent.selected index < 1)        {            window.alert("Please select yes or no for returning student.");            optionsStudent.focus();            return false;        }        if (branch.selectedIndex < 1)        {            window.alert("Please select branch.");            branch.focus();            return false;        }        if (optionsStudent.value == "yes" && grade.value == "")        {            window.alert("Please select registration grade if you're a returning student.");            grade.focus();            return false;        }        if (student_id.value == "")        {            window.alert("Please enter registration id.");            student_id.focus();            return false;        }        if (first_name.value == "")        {            window.alert("Please enter first name.");            first_name.focus();            return false;        }        if (last_name.value == "")        {            window.alert("Please enter last name.");            last_name.focus();            return false;        }        if (date.value == "")        {            window.alert("Please enter date of birth.");            date.focus();            return false;        }        if (parent_fname.value == "")        {            window.alert("Please enter parent's first name.");            parent_fname.focus();            return false;        }         if (parent_lname.value == "")        {            window.alert("Please enter parent's last name.");            parent_lname.focus();            return false;        }         if (email.value == "")        {            window.alert("Please enter a valid email.");            email.focus();            return false;        }         if (mobile_no.value == "")        {            window.alert("Please enter a valid phone number.");            mobile_no.focus();            return false;        }    return true;    }
-    </script>
+    function validate()
+    {
+        var optionsStudent = document.forms["Evaluation Form"]["optionsStudent"];
+        var branch = document.forms["Evaluation Form"]["branch"];
+        var student_id = document.forms["Evaluation Form"]["student_id"];
+        var first_name =  document.forms["Evaluation Form"]["first_name"];
+        var last_name = document.forms["Evaluation Form"]["last_name"];
+        var date = document.forms["Evaluation Form"]["date"];
+        var grade = document.forms["Evaluation Form"]["grade"];
+        var parent_fname = document.forms["Evaluation Form"]["parent_fname"];
+        var parent_lname = document.forms["Evaluation Form"]["parent_lname"];
+        var email = document.forms["Evaluation Form"]["email"];
+        var mobile_no = document.forms["Evaluation Form"]["mobile_no"];
+
+        if (optionsStudent.selected index < 1)
+        {
+            window.alert("Please select yes or no for returning student.");
+            optionsStudent.focus();
+            return false;
+        }
+
+        if (branch.selectedIndex < 1)
+        {
+            window.alert("Please select branch.");
+            branch.focus();
+            return false;
+        }
+
+        if (optionsStudent.value == "yes" && grade.value == "")
+        {
+            window.alert("Please select registration grade if you're a returning student.");
+            grade.focus();
+            return false;
+        }
+
+
+        if (student_id.value == "")
+        {
+            window.alert("Please enter registration id.");
+            student_id.focus();
+            return false;
+        }
+
+        if (first_name.value == "")
+        {
+            window.alert("Please enter first name.");
+            first_name.focus();
+            return false;
+        }
+
+        if (last_name.value == "")
+        {
+            window.alert("Please enter last name.");
+            last_name.focus();
+            return false;
+        }
+
+        if (date.value == "")
+        {
+            window.alert("Please enter date of birth.");
+            date.focus();
+            return false;
+        }
+
+
+        if (parent_fname.value == "")
+        {
+            window.alert("Please enter parent's first name.");
+            parent_fname.focus();
+            return false;
+        }
+
+         if (parent_lname.value == "")
+        {
+            window.alert("Please enter parent's last name.");
+            parent_lname.focus();
+            return false;
+        }
+
+         if (email.value == "")
+        {
+            window.alert("Please enter a valid email.");
+            email.focus();
+            return false;
+        }
+
+         if (mobile_no.value == "")
+        {
+            window.alert("Please enter a valid phone number.");
+            mobile_no.focus();
+            return false;
+        }
+
+    return true;
+
+    }</script>
 </head>
 <body>
 <div class="container">
