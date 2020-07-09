@@ -104,7 +104,15 @@ class EvaluationEngine:
         if (age >= 13 and current_grade == 'Grade 6'):
             eligibility = True
         return eligibility
-    def skill_set (self, birth_date, current_grade):
+   class EvalRecommendation:
+
+    def _init_(self, student_id,first_name,last_name,recommended_grade,skill,test_req):
+        self.student_id = student_id
+        self.recommended_grade = recommended_grade
+        self.skill = skill
+        self.test_required = test_req
+        self.first_name = first_name
+        self.last_name = last_name
         
 
 if __name__ == "__main__":
