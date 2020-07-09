@@ -104,8 +104,11 @@ class EvaluationEngine:
         if (age >= 13 and current_grade == 'Grade 6'):
             eligibility = True
         return eligibility
+    def skill_set (self, birth_date, current_grade):
+        
 
 if __name__ == "__main__":
     eng = EvaluationEngine("2020-09-01")
     evGrade, test_req =  eng.determine_grade("2014-07-04", "Preschool-1")
     print("Recommended Grade : {}, Test Required : {}".format(evGrade, test_req))
+
