@@ -114,11 +114,6 @@ class EvaluationEngine:
         self.first_name = first_name
         self.last_name = last_name
         self.student_id = student_id
-        self.recommended_grade = recommended_grade
-        self.skill = skill
-        self.test_required = test_req
-        self.first_name = first_name
-        self.last_name = last_name
         
         return EvalRecommendation:
         
