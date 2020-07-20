@@ -5,8 +5,16 @@ from evaluation_models import EvalResult
 from evaluation_engine import EvaluationEngine
 from datetime import datetime
 from evaluation_db import SkillSet
+from evaluation_models import EvalRecommendation
 from evaluation_models import Skill
 
+def submit_eval_rec(request, database):
+    rec_form = request.form
+    eval_rec = rec_form.get('grade')
+    recommendation= EvalRecommendation(eval_rec.split())
+    eval_res_db = EvalResultDB(database)
+    eval_res_db.add_eval_result(recommendation)
+    return eval_rec
 
 def submit_eval_form(request,database):
     form = request.form
@@ -52,10 +60,8 @@ def submit_eval_form(request,database):
     if test_required is True:
         test_req_ind = 'Yes'
     eval_res = EvalResult(evaluation_form.student_id,
-                          evaluation_form.first_name,evaluation_form.last_name,
-                          grade,test_req_ind)
-    eval_res_db = EvalResultDB(database)
-    eval_res_db.add_eval_result(eval_res)
+                          evaluation_form.first_name, evaluation_form.last_name,
+                          grade, test_req_ind)
     skill_set_db = SkillSet(database)
     skill_set_db.fetch_skill_set(eval_res)
     return eval_res
