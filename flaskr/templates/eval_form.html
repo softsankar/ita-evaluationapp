@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,69 +12,95 @@
 	.required {color:red}
 
     </style>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 			crossorigin="anonymous"/>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+
 	<script type="text/javascript">
-			$('#birth_date').datepicker({
-				format: 'yyyy-mm-dd',
-				autoclose: true,
-				todayBtn: true
-			});
+	/**/
+	function validate()
+	{
+		var b = document.getElementById("grade");
+		var c = document.getElementById("return_student").checked
+
+		if (c && b.value.trim()=="")
+		{
+			alert("Returning students must select registration grade.")
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
 	</script>
+
+
 </head>
 <body>
 <div class="container">
 <table border="0" width="100%">
 	<tr>
-	<td valign="center"><img src="{{url_for('static', filename='cta_logo.png')}}" class="img-fluid"/></td>
-	<td valign="center"><h1>Evaluation Request Form</h1></td>
+		<td valign="center"><img src="http://catamilacademy.org/images/tha_logo.png" align="left" style="width:70px;height:70px;" class="img-fluid"/></td>
+		<td><p style="font-size:40px;text-align:center;">Student Evaluation Form</p></td>
+		<td valign="center"><img src="http://catamilacademy.org/images/logo.png" align="right" style="width:70px;height:70px;" class="img-fluid"/></td>
 	</tr>
-	<tr><td colspan="2"><hr></td></tr>
+	<tr><td colspan="4"><hr></td></tr>
 </table>
-<form name = "Evaluation Form" method="POST" action="evaluation/submit">
+<form name = "Evaluation Form" method="POST" onsubmit="return validate()" action="evaluation/submit">
+	<fieldset class="form-group">
+	<div class="form-group row">
+	<legend class="col-form-label col-auto pt-0">
+	<b style="font-size:11px;"> Note: Please complete the <a href="https://www.catamilacademy.org/cta/StudentReg.aspx">registration form </a> before applying for an evaluation.If your birthdate is unavailable contact the registration officer.</b>
+	</legend>
+	</div>
 	<fieldset class="form-group">
 	<div class="form-group row">
 	<legend class="col-form-label col-auto pt-0">
 		<span class="required">Are you a returning student?<sup>*</sup></span></legend>
 	<div class="col-auto">
 	 <div class="form-check">
-		<input class="form-check-input" type="radio" id="return_student" value="Yes" required="true">
+	 <div class= "radio">
+		<input class="form-check-input" type="radio" name="optionsStudent" id="return_student" value="Yes" required>
 		<label class="form-check-label" for="return_student">Yes</label>
+	 </div>
 	 </div>
 	</div>
 	<div class="col-auto">
 	 <div class="form-check">
-		<input class="form-check-input" type="radio" id="new_student" value="Yes" required="true">
-		<label class="form-check-label" for="new_student">No</label>
+	 <div class="radio">
+		<input class="form-check-input" type="radio" name="optionsStudent" id="new_student" value="No" required>
+		<label class="checkbox_inline" class="form-check-label" for="new_student">No</label>
+	 </div>
 	 </div>
 	</div></div></fieldset>
 	<fieldset class="form-group">
 	<div class="form-group row">
 	<div class="col-auto">
-	<label for="branch" class="required">Branch <sup>*</sup>:</label>
-	<SELECT id="branch" name="branch" class="form-control" required="true" >
-		<OPTION Value="">Select Branch</OPTION>
-		<OPTION Value="Cupertino">Cupertino</OPTION>
-		<OPTION Value="Fremont-Hopkins">Fremont Hopkins</OPTION>
-		<OPTION Value="Fremont-Washington">Fremont-Washington</OPTION>
-		<OPTION Value="Pleasonton">Pleasanton</OPTION>
-		<OPTION Value="Evergreen">Evergreen</OPTION>
-		<OPTION Value="San Ramon">San Ramon</OPTION>
-	</SELECT>
+		<label for="branch" class="required">Branch <sup>*</sup>:</label>
+		<SELECT id="branch" name="branch" class="form-control" required >
+			<OPTION Value="">Select Branch</OPTION>
+			<OPTION Value="Cupertino">Cupertino</OPTION>
+			<OPTION Value="Evergreen">Evergreen</OPTION>
+			<OPTION Value="Fremont-Hopkins">Fremont-Hopkins</OPTION>
+			<OPTION Value="Fremont-Washington">Fremont-Washington</OPTION>
+			<OPTION Value="Pleasanton">Pleasanton</OPTION>
+			<OPTION Value="San Ramon">San Ramon</OPTION>
+		</SELECT>
 	</div>
 	<div class="col-auto">
-	<label for="student_id">Student ID:</label>
-	<input type="text" id="student_id" name="student_id" class="form-control"/>
+		<label for="student_id" class="required">Registration ID<sup>*</sup>:</label>
+		<input type="text" id="student_id" name="student_id" class="form-control" required/>
 	</div></div>
 	</fieldset>
 	<fieldset class="form-group">
 	<div class="form-group row">
 	<div class="col-auto">
 		<label for="first_name" class="required">First Name<sup>*</sup>:</label>
-		<input type="text" id="first_name" name="first_name" class="form-control" required="true">
+		<input type="text" id="first_name" name="first_name" class="form-control" required>
 	</div>
 	<div class="col-auto">
 		<label for="middle_name">Middle Name:</label>
@@ -82,58 +108,26 @@
 	</div>
 	<div class="col-auto">
 		<label for="last_name" class="required">Last Name<sup>*</sup>:</label>
-		<input type="text" id="last_name" name="last_name" class="form-control" required="true">
+		<input type="text" id="last_name" name="last_name" class="form-control" required>
 	</div>
-	</div></fieldset>
-	<div class="form-group row">
+	</div>
+	</fieldset>
+	<fieldset class="form-group">
+		<div class="form-group row">
 		<div class="col-auto">
-			<label for="birth_date" class="required">Date of Birth<sup>*</sup>:</label>
-			<div class="birth_date input-group mb-4">
-				<input size="16" type="text" class="form-control birth_date"  value="" id="birth_date" name="birth_date"/>
-				<div class="input-group-append">
-				  <span class="fa fa-calendar input-group-text birth-date" aria-hidden="true "></span>
-				</div>
+			<div class="form-group ">
+				<label for="date" class="required" class="control-label ">Date of Birth<sup>*</sup>:</label>
+		  		<input type="text" id="date" name="date" class="form-control" required placeholder="YYYY/MM/DD"/>
 			</div>
 		</div>
-	</div>
-	<fieldset class="form-group">
-		<div class="form-group row">
 		<div class="col-auto">
-			<label for="parent_fname" class="required">Parent/Guardian First Name<sup>*</sup>:</label>
-			<input type="text" id="parent_fname" name="parent_fname"
-				   class="form-control" required="true"/>
-		</div>
-		<div class="col-auto">
-			<label for="parent_lname" class="required">Parent/Guardian Last Name<sup>*</sup>:</label>
-			<input type="text" id="parent_lname" name="parent_lname"
-				   class="form-control" required="true"/>
-		</div>
-		</div>
-	</fieldset>
-	<fieldset class="form-group">
-		<div class="form-group row">
-		<div class="col-auto">
-			<label for="email" class="required">Email<sup>*</sup>:</label>
-			<input type="text" class="form-control" id="email" name="email"/>
-		</div>
-		<div class="col-auto">
-			<label for="mobile_no" class="required">Mobile Number<sup>*</sup>:</label>
-			<input type="tel" id="mobile_no" class="form-control" name="mobile_no"
-				   placeholder="123-456-7890" required="true"/>
-		</div>
-		</div>
-	</fieldset>
-	<fieldset class="form-group">
-		<div class="form-group row">
-		<div class="col-auto">
-			<label for="grade">Registration Grade:</label>
+			<label for="grade">Registration Grade:<span style="color:#ff0000;font-size: 14px">(required if returning student)</span></label>
 			<SELECT id="grade" name="grade" class="form-control">
-					<OPTION Value = "None">None</OPTION>
+					<OPTION Value ="">None</OPTION>
 					<OPTION Value="Preschool 1">Preschool 1</OPTION>
 					<OPTION Value="Preschool 2">Preschool 2</OPTION>
-					<OPTION Value="Advanced Basic">Advanced Basic</OPTION>
-					<OPTION Value="Basic 1">Basic 1</OPTION>
-					<OPTION Value="Basic 2">Basic 2</OPTION>
+					<OPTION Value="Kindergarten">Kindergarten</OPTION>
+					<OPTION Value="Advanced Kindergarten">Advanced Kindergarten</OPTION>
 					<OPTION Value="Grade 1">Grade 1</OPTION>
 					<OPTION Value="Grade 2">Grade 2</OPTION>
 					<OPTION Value="Grade 3">Grade 3</OPTION>
@@ -141,104 +135,65 @@
 					<OPTION Value="Grade 5">Grade 5</OPTION>
 					<OPTION Value="Grade 6">Grade 6</OPTION>
 					<OPTION Value="Grade 7">Grade 7</OPTION>
+					<OPTION Value="Grade 8">Grade 8</OPTION>
 			</SELECT>
 		</div></div>
 	</fieldset>
 	<fieldset class="form-group">
 		<div class="form-group row">
-			<legend class="col-form-label col-auto pt-0">Reading Level :</legend>
-			<div class="col-auto">
-				<div class="form-check form-check-inline">
-					<input type="radio" id="rLevel_1" name="rLevel_1" class="form-check-input" value="1"/>
-					<label for="rLevel_1" class="form-check-label">1</label>
-				</div>
-			</div>
-			<div class="col-auto">
-				<div class="form-check form-check-inline">
-					<input type="radio" id="rLevel_2" name="rLevel_2" value="2" class="form-check-input"/>
-					<label for="rLevel_2" class="form-check-label">2</label>
-				</div>
-			</div>
-			<div class="col-auto">
-				<div class="form-check form-check-inline">
-					<input type="radio" id="rLevel_3" name="rLevel_3" value="3" class="form-check-input"/>
-					<label for="rLevel_3" class="form-check-label">3</label>
-				</div>
-			</div>
+		<div class="col-auto">
+			<label for="parent_fname" class="required">Parent/Guardian First Name<sup>*</sup>:</label>
+			<input type="text" id="parent_fname" name="parent_fname "
+				   class="form-control" required/>
+		</div>
+		<div class="col-auto">
+			<label for="parent_lname" class="required">Parent/Guardian Last Name<sup>*</sup>:</label>
+			<input type="text" id="parent_lname" name="parent_lname"
+				   class="form-control" required/>
+		</div>
 		</div>
 	</fieldset>
 	<fieldset class="form-group">
 		<div class="form-group row">
-			<legend class="col-form-label col-auto pt-0">Speaking Level :</legend>
-			<div class="col-auto">
-				<div class="form-check form-check-inline">
-					<input type="radio" id="sLevel_1" name="sLevel_1" class="form-check-input" value="1/>
-					<label for="sLevel_1" class="form-check-label">1</label>
-				</div>
-			</div>
-			<div class="col-auto">
-				<div class="form-check form-check-inline">
-					<input type="radio" id="sLevel_2" name="sLevel_2" value="2" class="form-check-input"/>
-					<label for="sLevel_2" class="form-check-label">2</label>
-				</div>
-			</div>
-			<div class="col-auto">
-				<div class="form-check form-check-inline">
-					<input type="radio" id="sLevel_3" name="sLevel_3" value="3" class="form-check-input"/>
-					<label for="sLevel_3" class="form-check-label">3</label>
-				</div>
-			</div>
+		<div class="col-auto">
+			<label for="email" class="required">Email ID<sup>*</sup>:</label>
+			<input type="text" class="form-control" id="email" name="email" placeholder="email@email.com" required/>
+		</div>
+		<div class="col-auto">
+			<label for="mobile_no" class="required">Phone Number<sup>*</sup>:</label>
+			<input type="tel" id="mobile_no" class="form-control" name="mobile_no"
+				   placeholder="123-456-7890" required/>
+		</div>
 		</div>
 	</fieldset>
-	<fieldset class="form-group">
-		<div class="form-group row">
-			<legend class="col-form-label col-auto pt-0">Writing Level :</legend>
-			<div class="col-auto">
-				<div class="form-check form-check-inline">
-					<input type="radio" id="wLevel_1" name="wLevel_1" class="form-check-input" value="1"/>
-					<label for="wLevel_1" class="form-check-label">1</label>
-				</div>
-			</div>
-			<div class="col-auto">
-				<div class="form-check form-check-inline">
-					<input type="radio" id="wLevel_2" name="wLevel_2" value="2" class="form-check-input"/>
-					<label for="wLevel_2" class="form-check-label">2</label>
-				</div>
-			</div>
-			<div class="col-auto">
-				<div class="form-check form-check-inline">
-					<input type="radio" id="wLevel_3" name="wLevel_3" value="3" class="form-check-input">
-					<label for="wLevel_3" class="form-check-label">3</label>
-				</div>
-			</div>
-		</div>
-	</fieldset>
-	<fieldset class="form-group">
-		<div class="form-group row">
-			<div class="col-auto">
-				<label for="comments">Additional Comments :</label>
-				<textarea rows="4" cols="50" id="comments" class="form-control"
-						  name="comments"  placeholder="Enter your comments here"></textarea>
-			</div>
-		</div>
-	</fieldset>
-	<fieldset class="form-group">
-		<div class="form-group row">
-			<legend class="col-form-label col-auto pt-0">Email me a copy of my response :</legend>
-			<div class="col-auto">
-				<div class="form-check form-check-inline">
-					<input type="checkbox" id="email_response" name="email_response"
-						   value="yes" class="form-check-input">
-					<label for="email_response" class="form-check-label">Yes</label>
-				</div>
-			</div>
-		</div>
 	</fieldset>
 	<div class="form-group" align="center">
 	<input class="btn btn-primary btn-primary btn-lg" type="submit" value="Submit form"/>
 	<input class="btn btn-secondary btn-primary btn-lg" type="reset" value="Reset"/>
 	</div>
 </form>
+	<!-- Extra JavaScript/CSS added manually in "Settings" tab -->
+	<!-- Include jQuery -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+	<!-- Include Date Range Picker -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+	<script>
+		$(document).ready(function(){
+			var date_input=$('input[name="date"]'); //our date input has the name "date"
+			var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+			date_input.datepicker({
+				format: 'yyyy/mm/dd',
+				container: container,
+				todayHighlight: true,
+				autoclose: true,
+				startDate: '-14y -10m',
+   				endDate: '-2y -10m'
+			})
+		})
+	</script>
 </div>
 </body>
 </html>
