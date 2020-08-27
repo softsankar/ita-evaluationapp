@@ -38,4 +38,9 @@ def create_app(test_config=None):
         eval_result = eval_action.submit_eval_form(request,'../cta_evaluation.db')
         return render_template('eval_result.html', eval_result=eval_result)
 
+    @app.route("/evaluation/recommendation", methods=['POST'])
+    def submit_evaluation_recommendation():
+        eval_rec = eval_action.submit_eval_rec(request, '../cta_evaluation.db')
+        return render_template('eval_result.html', eval_rec=eval_rec)
+
     return app
