@@ -1,0 +1,124 @@
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
+    <style>
+
+        .required {color:red}
+
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            text-align: center;
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+        th, td {
+            border: 1px solid ;
+            text-align: center;
+        }
+
+        .row-striped:nth-of-type(odd){
+            background-color: #efefef;
+        }
+
+        .row-striped:nth-of-type(even){
+            background-color: #ffffff;
+        }        
+    </style>
+    <!--style>
+        .eval_result-table td {padding: 14px}
+    </style-->
+    <style>
+        .bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: #ff0000;}
+    </style>
+</head>
+<body>
+<div class="container">
+<table border="0" width="100%">
+	<tr>
+		<td valign="center"><img src="http://catamilacademy.org/images/tha_logo.png" align="left" style="width:70px;height:70px;" class="img-fluid"/></td>
+		<td><p style="font-size:40px;text-align:center;"><b>Evaluation Recommendation</b></td>
+		<td valign="center"><img src="http://catamilacademy.org/images/logo.png" align="right" style="width:70px;height:70px;" class="img-fluid"/></td>
+	</tr>
+    <tr><td colspan="4"><h2 style="text-align:center;font-size: 22px;margin: 20px;margin-left: auto;margin-right: auto">Based on student's age, <B>{{evRec.first_name}} {{evRec.last_name}}</B>, is eligible to take one of the evaluation exams listed here.
+    <p style="text-align:center;color:red;font-size: 15px;margin: 20px;margin-left: auto;margin-right: auto">Please choose the evaluation exam based on what your child's skillset.</p></h2>
+    </td></tr>
+    <tr><td colspan="4">
+    <form name = "recoform" method="POST"  action="/recommendation/save">  
+    <table width="100%" align="center" valign="top">
+        <thead>
+        <tr>
+            <th style="text-align:center;">Select</th>
+            <th style="text-align:center">Going To Grade</th>
+            <th style="text-align:center">Core Language Skills</th>
+            <th style="text-align:center">Grammer</th>
+            <th style="text-align:center">Reading</th>
+            <th style="text-align:center">Writing</th>
+            <th style="text-align:center">Oral/Conversation</th>
+            <th style="text-align:center">Project</th>
+        </tr>
+        </thead>  
+        <tbody>
+        {% for s in evRec.skills %}
+        <tr>
+            <fieldset class="form-group">
+            <div class="form-group row" align="center">
+            <td>
+            <input type="radio" name="select_grade" id="grade1" value="{{evRec.student_id}}_{{evRec.first_name}}_{{evRec.last_name}}_{{s.grade_level}}"> <br>
+            </td>
+            <td>{{s.grade_level}}</td>
+            <td>{{s.skills}}</td>
+            {%if s.grammar %}
+                <td>{{s.grammar}}</td>
+            {% else %}    
+                <td>Not Applicable</td>
+            {%endif%}
+            {%if s.reading %}
+                <td>{{s.reading}}</td>
+            {% else %}    
+                <td>Not Applicable</td>
+            {%endif%}                
+            {%if s.writing %}
+                <td>{{s.writing}}</td>
+            {% else %}    
+                <td>Not Applicable</td>
+            {%endif%}
+            {%if s.oral %}
+                <td>{{s.oral}}</td>
+            {% else %}    
+                <td>Not Applicable</td>
+            {%endif%}            
+            {%if s.project %}
+                <td>{{s.project}}</td>
+            {% else %}    
+                <td>Not Applicable</td>
+            {%endif%}  
+            </div></fieldset>                 
+        </tr>
+        {% endfor %}
+        </tbody> 
+    </table>
+    <fieldset class="form-group">
+        <div class="form-group row" align="center">
+            <input style="background-color:rgb(0, 123, 255);font-size: 19px;border:0;margin-left: auto;margin-right: auto;margin-top: 12px" class="btn btn-primary btn-primary btn-lg" type="submit" value="Save Selection"/>
+        </div>
+    </fieldset>
+    </form>
+    </td></tr>
+</table>
+</div></body>
+</html>

@@ -1,4 +1,5 @@
 import sqlite3 as sql
+import app
 
 from datetime import datetime
 from evaluation_models import Skill
@@ -62,7 +63,7 @@ class EvalResultDB(EvalDB):
             cur = con.cursor()
             cur.execute("DELETE from eval_result WHERE id = :id", {'id': student.id})
             con.commit()
-            print('Successfully deleted')
+            app.logger.info('Successfully deleted')
 
     def add_eval_result(self, eval_result):
         with sql.connect(self.db_name) as con:
@@ -73,19 +74,40 @@ class EvalResultDB(EvalDB):
                          'eval_date': datetime.now(), 'grade': eval_result.eval_grade,
                          'test_required': eval_result.test_required})
             con.commit()
-            print('Successfully added')
+            app.logger.info('Successfully added')
 
 
 class SkillSet(EvalDB):
 
-        def fetch_skill_set(self, eval_result):
+    def fetch_skill_set(self, grade):
+        skillset=[]
         with sql.connect(self.db_name) as con:
             cur = con.cursor()
-            cur.execute("SELECT grade_level, Age, Skills, Grammar, Reading, Writing, Oral, Project FROM skill_set WHERE grade_level = ?", (eval_result.eval_grade,))
+            cur.execute("SELECT grade_level, Age, Skills, Grammar, Reading, Writing, Oral, Project FROM skill_set WHERE grade_level = :grade", {'grade':grade})
             skill_res= cur.fetchall()
-            skillset={}
             for row in skill_res:
                 s = Skill(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
-                skillset[row[0]] = s
-            print('Successfully received')
-            return skillset
+                skillset.append(s)
+                app.logger.debug("Grade Level : %s, Age: %d, Skills : %s",s.grade_level,s.age,s.skills)
+            app.logger.info('Successfully received')
+        return skillset
+
+    def fetch_skillset_by_age(self, age,is_test_req,cur_reg_gradeno):
+        skillset=[]
+        with sql.connect(self.db_name) as con:
+            cur = con.cursor()
+            qry = ("SELECT grade_level, Age, Skills, Grammar, Reading, Writing, Oral, Project " +
+                   "FROM skill_set WHERE age <= :age and testreq_ind = :isTestReq ")
+            p_dict = {'age':age, 'isTestReq':str(is_test_req).lower()}
+            if int(cur_reg_gradeno) >= 1:
+                qry = qry + " and grade_no > :gradeno"
+                p_dict.add('gradeno',cur_reg_gradeno) 
+            app.logger.debug("Query : %s, Values : %s",qry,p_dict)    
+            cur.execute(qry,p_dict )
+            skill_res= cur.fetchall()
+            for row in skill_res:
+                s = Skill(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
+                skillset.append(s)
+                app.logger.debug("Grade Level : %s, Age: %d, Skills : %s",s.grade_level,s.age,s.skills)
+            app.logger.info('Successfully received')
+        return skillset    

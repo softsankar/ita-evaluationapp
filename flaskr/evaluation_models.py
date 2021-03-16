@@ -10,6 +10,8 @@ class EvalForm:
         self.middle_name = middle_name
         self.last_name = last_name
         self.email = email
+        if "/" in birth_date:
+            birth_date = birth_date.replace("/","-")
         self.birth_date = birth_date
         self.mobile_no = mobile_no
         self.parent_fname = parent_fname
@@ -34,6 +36,14 @@ class EvalResult:
         self.first_name = first_name
         self.last_name = last_name
 
+class EvalRecommendation:
+
+    def __init__(self,student_id,first_name,last_name,grade,skills):
+        self.student_id = student_id
+        self.first_name = first_name
+        self.last_name = last_name
+        self.grade = grade
+        self.skills = skills
 
 class Skill:
 

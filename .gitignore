@@ -2,3 +2,13 @@
 /.idea
 /instance/*
 /.idea/*
+/.vscode
+/.vscode/*
+/.venv
+/.venv/*
+/**/.DS_Store
+/**/.DS_Store/*
+/.github
+/.github/*
+/**/__pycache__
+/**/__pycache__/*

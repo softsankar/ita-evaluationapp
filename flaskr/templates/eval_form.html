@@ -36,9 +36,10 @@
 			return true;
 		}
 	}
+	$("#birth_date").datepicker({ 
+		format: 'yyyy-mm-dd'
+	});
 	</script>
-
-
 </head>
 <body>
 <div class="container">
@@ -117,7 +118,7 @@
 		<div class="col-auto">
 			<div class="form-group ">
 				<label for="date" class="required" class="control-label ">Date of Birth<sup>*</sup>:</label>
-		  		<input type="text" id="date" name="date" class="form-control" required placeholder="YYYY/MM/DD"/>
+		  		<input type="text" id="birth_date" name="date" class="form-control" required placeholder="YYYY-MM-DD" />
 			</div>
 		</div>
 		<div class="col-auto">

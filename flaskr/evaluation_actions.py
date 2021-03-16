@@ -1,3 +1,5 @@
+import app
+
 from evaluation_models import EvalForm
 from evaluation_db import EvalFormDB
 from evaluation_db import EvalResultDB
@@ -8,13 +10,17 @@ from evaluation_db import SkillSet
 from evaluation_models import EvalRecommendation
 from evaluation_models import Skill
 
+
 def submit_eval_rec(request, database):
-    rec_form = request.form
-    eval_rec = rec_form.get('grade')
-    recommendation= EvalRecommendation(eval_rec.split())
-    eval_res_db = EvalResultDB(database)
-    eval_res_db.add_eval_result(recommendation)
-    return eval_rec
+    g_det = request.form.get('select_grade')
+    app.logger.debug("Grade Detail : %s",g_det)
+    det = g_det.split("_")
+    evalDb = EvalResultDB(database)
+    evRec = EvalRecommendation(det[0],det[1],det[2],det[3],[])
+    evRes = EvalResult(evRec.student_id,evRec.first_name, evRec.last_name,evRec.grade,"yes")
+    evalDb.add_eval_result(evRes)
+    app.logger.debug("Grade Detail : %s",g_det)
+    return evRec
 
 def submit_eval_form(request,database):
     form = request.form
@@ -43,27 +49,32 @@ def submit_eval_form(request,database):
                                 form.get('middle_name'),
                                 form.get('last_name'),
                                 form.get('email'),
-                                form.get('birth_date'),
+                                form.get('date'),
                                 form.get('mobile_number'),
                                 form.get('parent_fname'),
                                 form.get('parent_lname'),
                                 form.get('grade'),
                                 rLevel,sLevel,wLevel,
                                 form.get('comments'))
+    logger = app.logger                           
+    logger.debug("Birth Date : %s",form.get("date"))                            
     eval_form_db = EvalFormDB(database)
     eval_form_db.add_evaluation_form(evaluation_form)
     cur_date = datetime.now()
     evalEng = EvaluationEngine(str(cur_date.year) + "-09-01")
-    grade,test_required = evalEng.determine_grade(evaluation_form)
-    print ('Test Required : ',test_required)
-    test_req_ind = 'No'
+    grade,g_age,test_required = evalEng.determine_grade(evaluation_form)
+    logger.debug("Grade : %s Age: %d ",grade,g_age)
+    skills = []
     if test_required is True:
         test_req_ind = 'Yes'
-    eval_res = EvalResult(evaluation_form.student_id,
-                          evaluation_form.first_name, evaluation_form.last_name,
-                          grade, test_req_ind)
-    skill_set_db = SkillSet(database)
-    skill_set_db.fetch_skill_set(eval_res)
-    return eval_res
+        cur_reg_gradeno=0
+        if form.get('grade'):
+            cur_reg_gradeno = form.get('grade')[:6]    
+        skill_set_db = SkillSet(database)
+        skills = skill_set_db.fetch_skillset_by_age(g_age,test_required,cur_reg_gradeno)
+    evRec = EvalRecommendation(form.get('student_id'),
+                form.get('first_name'),form.get('last_name'),
+                grade,skills)
+    return evRec
 
 
