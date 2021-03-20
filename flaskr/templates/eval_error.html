@@ -1,0 +1,67 @@
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
+    <style>
+
+        .required {color:red}
+
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            text-align: center;
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+        th, td {
+            border: 1px solid ;
+            text-align: center;
+        }
+
+        .row-striped:nth-of-type(odd){
+            background-color: #efefef;
+        }
+
+        .row-striped:nth-of-type(even){
+            background-color: #ffffff;
+        }        
+    </style>
+    <!--style>
+        .eval_result-table td {padding: 14px}
+    </style-->
+    <style>
+        .bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: #ff0000;}
+    </style>
+</head>
+<body>
+<div class="container">
+<table border="0" width="100%">
+	<tr>
+		<td valign="center"><img src="http://catamilacademy.org/images/tha_logo.png" align="left" style="width:70px;height:70px;" class="img-fluid"/></td>
+		<td><p style="font-size:40px;text-align:center;"><b>Evaluation Registration Error</b></td>
+		<td valign="center"><img src="http://catamilacademy.org/images/logo.png" align="right" style="width:70px;height:70px;" class="img-fluid"/></td>
+	</tr>
+    <tr><td colspan="4" nowrap align="center">
+        <img src="/static/oops.png" style="width:70px;height:70px;" class="img-fluid"/>
+    </td></tr>
+    <tr><td colspan="4" nowrap>
+        <h2 style="text-align:center;font-size: 22px;margin: 20px;margin-left: auto;margin-right: auto">
+            <span style="color:royalblue">Sorry <B>{{evRec.first_name}} {{evRec.last_name}}</B></span>, we bumped into a problem. The problem is <font color="red">{{message}} </font> . 
+            <p style="font-size: 15px;margin: 20px;margin-left: auto;margin-right: auto"">Please reach out to Evaluation Officer if you think you receive this as an error</p></h2>
+    </td></tr>
+ </table>
+</div></body>
+</html>

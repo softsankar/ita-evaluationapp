@@ -1,5 +1,6 @@
 import sqlite3 as sql
 import app
+import sys
 
 from datetime import datetime
 from evaluation_models import Skill
@@ -12,48 +13,46 @@ class EvalDB:
 
 
 class EvalFormDB(EvalDB):
-    ##def fetch_evaluation_form(self,evaluation_form):
-    ##with sql.connect(self.db_name) as con:
-    ##cur = con.cursor()
-    ##cur.execute("SELECT * FROM evaluation_applicant WHERE student_id= :id",{'id':evaluation_form.student_id})
-    ##result= cur.fetchall()
-    ##if result >0 then "Already exist"
-    ##else
 
     def add_evaluation_form(self, evaluation_form):
-        ##myresult= self.fetch_evaluation_form(evaluation_form)
-        try:
-            ##if myresult is None:
+        message = "Success"
+        try :
             with sql.connect(self.db_name) as con:
                 cur = con.cursor()
-                ins_sql = 'INSERT INTO Evaluation_Applicant(return_ind, branch, student_id, first_name, middle_name,last_name, \
-                           email, birth_date,parent_fname,parent_lname, mobile_no, grade, read_level, write_level, \
-                           speak_level, comments)  \
-                           values (:return_ind, :branch, :student_id, :first_name, :middle_name,:last_name, :email, \
-                          :birth_date, :parent_fname, :parent_lname,:mobile_no, :grade, :rlevel, :wLevel, :sLevel, \
-                          :comments) '
-                cur.execute(ins_sql,
+                sel_sql = "SELECT count(student_id) as std_cnt FROM Evaluation_Applicant WHERE student_id = :student_id"
+                cur.execute(sel_sql,{"student_id":evaluation_form.student_id})
+                rec = cur.fetchall()   
+                if rec[0][0] == 0:
+                    ins_sql = 'INSERT INTO Evaluation_Applicant(return_ind, branch, student_id, first_name, middle_name,last_name, \
+                                email, birth_date,parent_fname,parent_lname, mobile_no, grade, read_level, write_level, \
+                                speak_level, comments)  \
+                                values (:return_ind, :branch, :student_id, :first_name, :middle_name,:last_name, :email, \
+                                :birth_date, :parent_fname, :parent_lname,:mobile_no, :grade, :rlevel, :wLevel, :sLevel, \
+                                :comments) '
+                    cur.execute(ins_sql,
                             {'return_ind': evaluation_form.return_ind,
-                             'branch': evaluation_form.branch,
-                             'student_id': evaluation_form.student_id,
-                             'first_name': evaluation_form.first_name,
-                             'middle_name': evaluation_form.middle_name,
-                             'last_name': evaluation_form.last_name,
-                             'email': evaluation_form.email,
-                             'birth_date': evaluation_form.birth_date,
-                             'mobile_no': evaluation_form.mobile_no,
-                             'parent_fname': evaluation_form.parent_fname,
-                             'parent_lname': evaluation_form.parent_lname,
-                             'grade': evaluation_form.grade,
-                             'rlevel': evaluation_form.read_level,
-                             'wLevel': evaluation_form.write_level,
-                             'sLevel': evaluation_form.speak_level,
-                             'comments': evaluation_form.comments
-                             })
-            con.commit()
-            return 'Success'
-        except sql.IntegrityError:
-            return 'already exist'
+                                'branch': evaluation_form.branch,
+                                'student_id': evaluation_form.student_id,
+                                'first_name': evaluation_form.first_name,
+                                'middle_name': evaluation_form.middle_name,
+                                'last_name': evaluation_form.last_name,
+                                'email': evaluation_form.email,
+                                'birth_date': evaluation_form.birth_date,
+                                'mobile_no': evaluation_form.mobile_no,
+                                'parent_fname': evaluation_form.parent_fname,
+                                'parent_lname': evaluation_form.parent_lname,
+                                'grade': evaluation_form.grade,
+                                'rlevel': evaluation_form.read_level,
+                                'wLevel': evaluation_form.write_level,
+                                'sLevel': evaluation_form.speak_level,
+                                'comments': evaluation_form.comments
+                                })
+                    con.commit()         
+                else:
+                    message= "Student already registered for the evaluation"
+        except:
+            message=sys.exc_info()[0]          
+        return message
 
 
 class EvalResultDB(EvalDB):

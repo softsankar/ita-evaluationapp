@@ -37,11 +37,13 @@ def create_app(test_config=None):
 
     @app.route("/evaluation/submit", methods=['POST'])
     def submit_evaluation_form():
-        ev_Rec = eval_action.submit_eval_form(request,'cta_evaluation.db')
+        ev_Rec,message = eval_action.submit_eval_form(request,'cta_evaluation.db')
         page = "eval_recommendation.html"
-        if not ev_Rec.skills:
+        if message != "Success" :
+            page="eval_error.html"
+        elif not ev_Rec.skills:
             page = "no_eval.html"
-        return render_template(page, evRec=ev_Rec)
+        return render_template(page, evRec=ev_Rec,message=message)
 
     @app.route("/recommendation/save", methods=['POST'])
     def submit_evaluation_recommendation():
