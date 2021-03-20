@@ -71,7 +71,7 @@ def submit_eval_form(request,database):
         cur_reg_gradeno=0
         if form.get('grade'):
             cur_reg_gradeno = form.get('grade')[6:] 
-        logger.debug("Current Reg Grade no : " + cur_reg_gradeno)       
+            logger.debug("Current Reg Grade no : " + cur_reg_gradeno)       
         skill_set_db = SkillSet(database)
         skills = skill_set_db.fetch_skillset_by_age(g_age,test_required,cur_reg_gradeno)
     evRec = EvalRecommendation(form.get('student_id'),
