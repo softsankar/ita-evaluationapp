@@ -101,7 +101,7 @@ class SkillSet(EvalDB):
             p_dict = {'age':age, 'isTestReq':str(is_test_req).lower()}
             if int(cur_reg_gradeno) >= 1:
                 qry = qry + " and grade_no > :gradeno"
-                p_dict.add('gradeno',cur_reg_gradeno) 
+                p_dict.update({'gradeno':cur_reg_gradeno}) 
             app.logger.debug("Query : %s, Values : %s",qry,p_dict)    
             cur.execute(qry,p_dict )
             skill_res= cur.fetchall()

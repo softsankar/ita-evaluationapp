@@ -64,12 +64,14 @@ def submit_eval_form(request,database):
     evalEng = EvaluationEngine(str(cur_date.year) + "-09-01")
     grade,g_age,test_required = evalEng.determine_grade(evaluation_form)
     logger.debug("Grade : %s Age: %d ",grade,g_age)
+    logger.debug("Registered Grade : %s",form.get("grade"))
     skills = []
     if test_required is True:
         test_req_ind = 'Yes'
         cur_reg_gradeno=0
         if form.get('grade'):
-            cur_reg_gradeno = form.get('grade')[:6]    
+            cur_reg_gradeno = form.get('grade')[6:] 
+        logger.debug("Current Reg Grade no : " + cur_reg_gradeno)       
         skill_set_db = SkillSet(database)
         skills = skill_set_db.fetch_skillset_by_age(g_age,test_required,cur_reg_gradeno)
     evRec = EvalRecommendation(form.get('student_id'),
